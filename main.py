@@ -2,14 +2,20 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+# List of countries (you can expand this list as needed)
+countries = [
+    "United States", "Canada", "United Kingdom", "Germany", "France",
+    "Japan", "Australia", "Brazil", "India", "China"
+]
+
 @app.get("/")
-async def root():
-    return {"message": "Hello World"}
+def read_root():
+    return {"Hello": "World"}
 
 @app.get("/items/{item_id}")
-async def read_item(item_id: int):
-    return {"item_id": item_id}
+def read_item(item_id: int, q: str = None):
+    return {"item_id": item_id, "q": q}
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+@app.get("/countries")
+def get_countries():
+    return {"countries": countries}
